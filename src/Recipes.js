@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { css } from 'glamor'
-import { compose, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import ListRecipes from './queries/ListRecipes'
 import NewRecipeSubscription from './subscriptions/NewRecipeSubscription'
 
@@ -67,7 +67,7 @@ const styles = {
 export default compose(
   graphql(ListRecipes, {
     options: {
-      fetchPolicy: 'network-only'
+      fetchPolicy: 'cache-and-network'
     },
     props: props => ({
       recipes: props.data.listRecipes ? props.data.listRecipes.items : [],
