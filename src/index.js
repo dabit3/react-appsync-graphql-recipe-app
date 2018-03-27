@@ -20,9 +20,9 @@ const client = new AWSAppSyncClient({
  
 const WithProvider = () => (
   <ApolloProvider client={client}>
-    <Rehydrated>
-      <App />
-    </Rehydrated>
+    <Rehydrated render={({ rehydrated }) => (
+      rehydrated ? <App /> : <strong>Your custom UI componen here...</strong>
+    )} />
   </ApolloProvider>
 );
  

@@ -3,11 +3,14 @@ import React from 'react'
 import { css } from 'glamor'
 import { compose, graphql } from 'react-apollo'
 import ListRecipes from './queries/ListRecipes'
+import NewRecipeSubscription from './subscriptions/NewRecipeSubscription'
 
 class Recipes extends React.Component {
+  componentWillMount(){
+    this.props.subscribeToNewRecipes();
+  }
   render() {
     console.log('props:', this.props)
-    // console.log('arr: ', JSON.parse(this.props.recipes[1].instructions))
     return (
       <div {...css(styles.container)}>
         <h1>Recipes</h1>
@@ -69,6 +72,20 @@ export default compose(
     },
     props: props => ({
       recipes: props.data.listRecipes ? props.data.listRecipes.items : [],
+      subscribeToNewRecipes: params => {
+        props.data.subscribeToMore({
+          document: NewRecipeSubscription,
+          updateQuery: (prev, { subscriptionData: { data : { onCreateRecipe } } }) => {
+            return {
+              ...prev,
+              listRecipes: {
+                __typename: 'RecipeConnection',
+                items: [onCreateRecipe, ...prev.listRecipes.items.filter(recipe => recipe.id !== onCreateRecipe.id)]
+              }
+            }
+          }
+        })
+      }
     })
   })
 )(Recipes)

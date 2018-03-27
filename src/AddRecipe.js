@@ -6,16 +6,14 @@ import uuidV4 from 'uuid/v4'
 import CreateRecipe from './mutations/CreateRecipe'
 import ListRecipes from './queries/ListRecipes'
 
-const initialState = {
-  name: '',
-  ingredient: '',
-  ingredients: [],
-  instruction: '',
-  instructions: [],
-}
-
 class AddRecipe extends React.Component {
-  state = initialState
+  state = {
+    name: '',
+    ingredient: '',
+    ingredients: [],
+    instruction: '',
+    instructions: [],
+  }
   onChange = (key, value) => {
     this.setState({ [key]: value })
   }
@@ -45,7 +43,13 @@ class AddRecipe extends React.Component {
       instructions,
       name
     })
-    this.setState(initialState)
+    this.setState({
+      name: '',
+      ingredient: '',
+      ingredients: [],
+      instruction: '',
+      instructions: [],
+    })
   }
   render() {
     return (
