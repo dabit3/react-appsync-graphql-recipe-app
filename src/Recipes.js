@@ -10,7 +10,6 @@ class Recipes extends React.Component {
     this.props.subscribeToNewRecipes();
   }
   render() {
-    console.log('props:', this.props)
     return (
       <div {...css(styles.container)}>
         <h1>Recipes</h1>

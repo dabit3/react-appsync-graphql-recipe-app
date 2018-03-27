@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from 'glamor'
-import { compose, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import uuidV4 from 'uuid/v4'
 
 import CreateRecipe from './mutations/CreateRecipe'
@@ -97,24 +97,22 @@ class AddRecipe extends React.Component {
   }
 }
 
-export default compose(
-  graphql(CreateRecipe, {
-    props: props => ({
-      onAdd: recipe => props.mutate({
-        variables: recipe,
-        optimisticResponse: {
-          __typename: 'Mutation',
-          createRecipe: { ...recipe,  __typename: 'Recipe' }
-        },
-        update: (proxy, { data: { createRecipe } }) => {
-          const data = proxy.readQuery({ query: ListRecipes });
-          data.listRecipes.items.push(createRecipe);
-          proxy.writeQuery({ query: ListRecipes, data });
-        }
-      })
+export default graphql(CreateRecipe, {
+  props: props => ({
+    onAdd: recipe => props.mutate({
+      variables: recipe,
+      optimisticResponse: {
+        __typename: 'Mutation',
+        createRecipe: { ...recipe,  __typename: 'Recipe' }
+      },
+      update: (proxy, { data: { createRecipe } }) => {
+        const data = proxy.readQuery({ query: ListRecipes });
+        data.listRecipes.items.push(createRecipe);
+        proxy.writeQuery({ query: ListRecipes, data });
+      }
     })
   })
-)(AddRecipe)
+})(AddRecipe)
 
 const styles = {
   button: {
