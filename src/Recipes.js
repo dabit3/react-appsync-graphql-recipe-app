@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { css } from 'glamor'
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import ListRecipes from './queries/ListRecipes'
 import NewRecipeSubscription from './subscriptions/NewRecipeSubscription'
 
