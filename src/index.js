@@ -10,11 +10,11 @@ import { ApolloProvider } from 'react-apollo';
 import appSyncConfig from './appsync';
  
 const client = new AWSAppSyncClient({
-  url: appSyncConfig.graphqlEndpoint,
-  region: appSyncConfig.region,
+  url: appSyncConfig.aws_appsync_graphqlEndpoint,
+  region: appSyncConfig.aws_appsync_region,
   auth: {
-    type: appSyncConfig.authenticationType,
-    apiKey: appSyncConfig.apiKey,
+    type: appSyncConfig.aws_appsync_authenticationType,
+    apiKey: appSyncConfig.aws_appsync_apiKey,
   }
 });
  
